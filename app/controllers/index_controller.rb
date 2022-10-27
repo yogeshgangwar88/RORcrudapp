@@ -9,25 +9,25 @@ class IndexController < ApplicationController
   end
   
   def login
-   passwd = params[:password]
-  emailadd = params[:email]
-  validuser = User.find_by(email:emailadd)&.authenticate(passwd)
-  puts validuser.inspect
+        passwd = params[:password]
+        emailadd = params[:email]
+        validuser = User.find_by(email:emailadd)&.authenticate(passwd)
+        puts validuser.inspect
   
   
-  if validuser != nil && validuser
-  session[:user_id] = validuser.id
-  redirect_to "/userprofile"
-  else
-  flash.now[:alert] = 'Email or password did not match.'
-  render :signin
-  end
+      if validuser != nil && validuser
+        session[:user_id] = validuser.id
+        redirect_to "/userprofile"
+      else
+        flash.now[:alert] = 'Email or password did not match.'
+        render :signin
+      end
   end
   def userprofile
-  @userx = session[:user_id]
-  @booknew=Book.new
-  @books=Book.where(userid:session[:user_id])
-  
+      @userx = session[:user_id]
+      @booknew=Book.new
+      @books=Book.where(userid:session[:user_id])
+      
   end
  
 ########################################
