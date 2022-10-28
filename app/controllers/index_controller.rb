@@ -3,7 +3,7 @@ class IndexController < ApplicationController
   def signin
     logger.info "******************* this is signin method ****************"
     if session[:user_id]!=nil
-      flash[:success]="Already login"
+      flash[:success]="Already logged in"
       redirect_to "/userprofile"
     end
   end
@@ -67,7 +67,7 @@ end
 def logout
   session[:user_id]=nil
   #flash[:success]="Logout..."
-    redirect_to "/signin"
+    redirect_to :signin
 end
 
 def deletebooks
