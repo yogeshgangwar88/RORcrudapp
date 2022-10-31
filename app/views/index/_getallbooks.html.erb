@@ -1,3 +1,5 @@
+
+
 <table class="table table-hover">
   <thead class="thead-dark" style=    "background-color: lightcyan;">
     <tr>
@@ -5,7 +7,7 @@
       <th scope="col">Name</th>
       <th scope="col">Author</th>
       <th scope="col">Price</th>
-      <th scope="col">Action</th>
+      <th scope="col" colspan="2">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -13,7 +15,7 @@
     <% if @books.count>0 %>
       <% for bk in @books do %>
       <% item= item+1 %>
-      <tr> <td scope="row"><%= item %></td><td><%= bk.name %></td><td><%= bk.author %></td><td><%= bk.price %></td><td><%= button_to 'Delete', deletex_path(bk), method: :delete, data: {confirm: "Are you sure?"},class:"btn btn-danger btn-sm" %>   </td></tr>  
+      <tr class="<%= 'tr'+bk.id.to_s %>"> <td scope="row"><%= item %></td><td><%= bk.name %></td><td><%= bk.author %></td><td><%= bk.price %></td><td> <input type="button" class="btn btn-sm" value="Edit" style="background-color: lavenderblush;" onclick="tbleditrow(<%= bk.id.to_s %>);"  /></td><td>  <%= button_to 'Delete', deletex_path(bk), method: :delete, data: {confirm: "Are you sure?"},remote:true,class:"btn btn-danger btn-sm" %>   </td></tr>  
       <% end %>
    <% else%>
       <tr><td colspan="4">No Record available ...</td></tr>
@@ -22,23 +24,16 @@
   </tbody>
   <tfoot>
       <tr>
-      <%= form_with url:"/addbook",method: :post, model: @booknew do |form| %>
-      <td></td><td><%= form.text_field :name,placeholder:"Bookname",:class=>"form-control" %></td>
+      <%= form_with url:"/addbook",method: :post,remote:true, model: @booknew do |form| %>
+      <td><%= form.hidden_field :id, value: "" %></td>
+      <td><%= form.text_field :name,placeholder:"Book Name",:class=>"form-control" %></td>
       <td><%= form.text_field :author,placeholder:"Author",:class=>"form-control" %></td>
       <td><%= form.number_field :price,placeholder:"Price",step:"0.1",:class=>"form-control" %></td>
-      <td><%= form.submit "Add Book",:class=>"btn btn-primary btn-sm" %></td>
-      <% end %>
+      <td><%= form.submit "Add Book",:class=>"btn btn-primary btn-sm" %> <input type="reset" style="display:none;" class="btn btn-default btn-sm" value="Cancel" onclick="canceledit();"></td>
       </tr>
-    <tr><td colspan="4">
+      <% end %>
+      
     
-    <% if @booknew.errors.full_messages.any? %>
-        <div class="alert alert-warning" role="alert"> 
-        <% @booknew.errors.full_messages.each do |error_message| %>
-        <%= error_message %>  <br />
-        <% end %>
-        </div>
-    <% end %>
-    </td></tr>
   </tfoot>
  
   

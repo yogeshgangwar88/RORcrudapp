@@ -7,9 +7,99 @@
 <div class="panel panel-primary">
     <div class="panel-heading">Favourite Books</div>
     <div class="panel-body">
-  <%= render partial:"getallbooks" %>
+      <%= render partial:"getallbooks" %>
     </div>
     
-  </div>
-
 </div>
+<h2>Testing Ag Grid</h2>
+<div style="height:10px;"></div>
+<div id="books_grid_header" style="height:30px;text-align:center"><u><strong>Favourite Books</strong></u></div>
+<div style="height:20px;"></div>
+<div id="books_grid" class = "ag-theme-alpine" style="width: 100%; height: 350px;"></div>
+
+
+
+<h2>modal testing</h2>
+
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+
+//--------------------------//
+var coldefs=[
+  {headerName:"#","valueGetter": "node.rowIndex + 1"},
+  {"headerName":"Book Name","field":"name", "filter":"set"},
+  {"headerName":"Author","field":"author", "filter":"set"},
+  {"headerName":"Price","field":"price", "filter":"set"},
+  {"headerName":"Action",checkboxSelection:true}
+]
+var gridOptions =
+{
+columnDefs: coldefs,
+rowData: <%= raw @booksdata %>,
+rowSelection: 'multiple',
+rowHeight: 40,
+headerHeight: 50,
+suppressRowClickSelection: true,
+enableColResize: true,
+enableStatusBar: true,
+enableRangeSelection: false,
+pagination : true,
+paginationPageSize:10
+};
+function manage_header_chekbox(){
+if(document.getElementById("aghcb").checked == true){
+      gridOptions.api.selectAll();
+      $('#aghcb').attr('checked', true);
+}
+else{
+      gridOptions.api.deselectAll();
+}
+}
+document.addEventListener('DOMContentLoaded', function(){
+var gridDiv = document.querySelector('#books_grid');
+new agGrid.Grid(gridDiv, gridOptions);
+});
+
+//---------------------------------------//
+function tbleditrow(r){
+console.log(r);
+$('[name="commit"]').val("Update");
+$('#book_name').val($('.tr'+r+'>td')[1].textContent);
+$('#book_author').val($('.tr'+r+'>td')[2].textContent);
+$('#book_price').val($('.tr'+r+'>td')[3].textContent);
+$('#book_id').val(r);
+$('[type="reset"]').show();
+}
+function canceledit(){
+$('#book_id').val('');
+$('[name="commit"]').val("Add Book");
+$('[type="reset"]').hide();
+}
+
+</script>
