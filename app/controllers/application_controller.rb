@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-    before_action :require_login , only:[:userprofile,:addbook,:deletebooks]
+    before_action :require_login , only:[:userprofile,:deletebooks,:newbook,:addbook]
 
   private
 
