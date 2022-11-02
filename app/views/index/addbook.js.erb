@@ -1,0 +1,16 @@
+<% if flash[:success] %>
+        $('#alert_msg').html('<div class="alert alert-success" role="alert"> <%= flash[:success] %></div>')
+            <% if !flash[:success].include?('modified') %> //just for save and reset form
+            $('#bookform').trigger('reset')
+            <% end %>
+<% else %>
+
+ $('#alert_msg').html(`<% if @newbook.errors.full_messages.any? %>
+            <div class="alert alert-danger" role="alert"> 
+            <% @newbook.errors.full_messages.each do |error_message| %>
+            <%= error_message %>  <br />
+            <% end %>
+            </div>
+        <% end %>`)
+<% end %>
+ 

@@ -3,56 +3,66 @@ class IndexController < ApplicationController
   
   def userprofile
       @userx = session[:user_id]
+      createlog(session[:user_id])
       @books=Book.where(userid:session[:user_id])
-      @booksdata=Book.where(userid:session[:user_id]).to_json
+      #@booksdata=Book.where(userid:session[:user_id]).to_json
   end
  
 ########################################
 def newbook
+    @newbook=Book.new
     if params[:id]!=nil
-      @newbook=Book.find(params[:id]) rescue Book.new
-    else
-     @newbook=Book.new 
+      bk=Book.where(:id=>params[:id], :userid=>session[:user_id].to_s)
+      
+      if bk.length>0
+        @newbook=bk.first
+      end
     end
 end
 
-def addbook
-msg="Added"
-  if books_param[:id]==(nil||"")
-    @bk=Book.new
-    @bk.userid=session[:user_id]
-  else
-    @bk=Book.find(books_param[:id])
-    msg="modified"
-  end
+  def addbook
+    msg="Added"
+    if books_param[:id]==(nil||"")
+      @bk=Book.new
+      @bk.userid=session[:user_id]
+    else
+      bk=Book.where(:id=>books_param[:id], :userid=>session[:user_id].to_s)
+      if bk.length>0
+        @bk=bk.first
+        msg="modified"
+      end
+    end
   
-  @bk.name=books_param[:name]
-  @bk.author=books_param[:author]
-  @bk.price=books_param[:price]
-  
-  if @bk.save
-    flash[:success]=@bk.name+" #{msg} successfully"
-    redirect_to :userprofile 
-  else
-    @newbook=@bk
-    render :newbook 
-  end
-  
+    @bk.name=books_param[:name]
+    @bk.author=books_param[:author]
+    @bk.price=books_param[:price]
+    respond_to do |format|
+          if @bk.save
+            @newbook=Book.new
+            flash.now[:success]=@bk.name+" #{msg} successfully"
+          format.js
+          else
+            @newbook=@bk
+          format.js
+          end
+    end
 end
 #####################################
  
 
 def deletebooks
-  if session[:user_id]!=nil && params[:id]!=nil
-    bk=Book.find_by id: params[:id],userid:session[:user_id]
-    puts bk.inspect
-    if params[:id]!="0" && bk!=nil
-      bk.delete
-      flash[:alert]= bk.name+" Deleted Successfully"
+    if session[:user_id]!=nil && params[:id]!=nil
+      bk=Book.find_by id: params[:id],userid:session[:user_id]
+      
+      if params[:id]!="0" && bk!=nil
+        bk.delete
+        flash.now[:alert]= bk.name+" Deleted Successfully"
+      end
+    end
+    respond_to do |format|
+          format.js   
     end
   end
-redirect_to :userprofile
-end
 
         private
         

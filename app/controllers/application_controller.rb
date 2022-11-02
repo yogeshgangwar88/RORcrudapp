@@ -1,5 +1,13 @@
 class ApplicationController < ActionController::Base
     before_action :require_login , only:[:userprofile,:deletebooks,:newbook,:addbook]
+protected
+def createlog(q)
+  if q!=nil
+    puts "---------log start--------\n\t"+q.to_json+"\n--------log end--------"
+  end
+
+end
+
 
   private
 

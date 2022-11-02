@@ -2,7 +2,8 @@
 <div class="page-header">
     <h1>My Profile</h1>       
 </div>
-<%= render partial:"shared/flash"  %>
+<div id="alert_msg"></div>
+
 <div class="container"></div>
 <div class="panel panel-primary">
     <div class="panel-heading">Favourite Books</div>
@@ -49,44 +50,60 @@
 
 <script>
 
+// class MedalCellRenderer {
 
-//--------------------------//
-var coldefs=[
-  {headerName:"#","valueGetter": "node.rowIndex + 1"},
-  {"headerName":"Book Name","field":"name", "filter":"set"},
-  {"headerName":"Author","field":"author", "filter":"set"},
-  {"headerName":"Price","field":"price", "filter":"set"},
-  {"headerName":"Action",checkboxSelection:true}
-]
-var gridOptions =
-{
-columnDefs: coldefs,
-rowData: <%= raw @booksdata %>,
-rowSelection: 'multiple',
-rowHeight: 40,
-headerHeight: 50,
-suppressRowClickSelection: true,
-enableColResize: true,
-enableStatusBar: true,
-enableRangeSelection: false,
-pagination : true,
-paginationPageSize:10
-};
-function manage_header_chekbox(){
-if(document.getElementById("aghcb").checked == true){
-      gridOptions.api.selectAll();
-      $('#aghcb').attr('checked', true);
-}
-else{
-      gridOptions.api.deselectAll();
-}
-}
-document.addEventListener('DOMContentLoaded', function(){
-var gridDiv = document.querySelector('#books_grid');
-new agGrid.Grid(gridDiv, gridOptions);
-});
+//   init(params) {
+//   console.log(params);
+//   this.eGui=document.createElement('div');
+   
+//   this.eGui.innerHTML = '<span><a class="btn btn-sm" style="background-color: antiquewhite;margin: 5px;" href="/newbook/'+params.data.id+'">Edit</a><a class="btn btn-sm btn-danger confirmation"   href="/newbook/'+params.data.id+'">Delete</a></span>';
+//   this.eButton = this.eGui.querySelector('.confirmation'); 
+//   this.eventListener = () => confirm('are u sure');
+//   this.eButton.addEventListener("click", this.eventListener)
+//   }
 
-//---------------------------------------//
+//   getGui() {
+//     return this.eGui;
+//   }
 
+//   refresh(params) {
+//     return false;
+//   }
+// }
 
+// var coldefs=[
+//   {"headerName":"#","valueGetter": "node.rowIndex + 1",width: 50,},
+//   {"headerName":"Book Name","field":"name", "filter":"set"},
+//   {"headerName":"Author","field":"author", "filter":"set"},
+//   {"headerName":"Price","field":"price", "filter":"set"},
+  
+//   {"headerName": "Action","field": "#",cellRenderer: MedalCellRenderer}
+// ]
+// var gridOptions =
+// {
+// columnDefs: coldefs,
+// rowData: <%= raw @booksdata %>,
+// rowSelection: 'multiple',
+// rowHeight: 40,
+// headerHeight: 50,
+// suppressRowClickSelection: true,
+// enableColResize: true,
+// enableStatusBar: true,
+// enableRangeSelection: false,
+// pagination : true,
+// paginationPageSize:10
+// };
+// function manage_header_chekbox(){
+// if(document.getElementById("aghcb").checked == true){
+//       gridOptions.api.selectAll();
+//       $('#aghcb').attr('checked', true);
+// }
+// else{
+//       gridOptions.api.deselectAll();
+// }
+// }
+// document.addEventListener('DOMContentLoaded', function(){
+// var gridDiv = document.querySelector('#books_grid');
+// new agGrid.Grid(gridDiv, gridOptions);
+// });
 </script>

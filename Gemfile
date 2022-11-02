@@ -71,3 +71,6 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+gem 'sass-rails'
+gem 'jquery-rails'
+gem 'turbolinks'

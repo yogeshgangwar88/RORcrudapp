@@ -2,16 +2,10 @@
 <div class="page-header">
     <h1>Books </h1>       
 </div>
-<%= render partial:"shared/flash"  %>
-        <% if @newbook.errors.full_messages.any? %>
-            <div class="alert alert-warning" role="alert"> 
-            <% @newbook.errors.full_messages.each do |error_message| %>
-            <%= error_message %>  <br />
-            <% end %>
-            </div>
-        <% end %>
 
-<%= form_with url:"/addbook",method: :post, model: @newbook do |formz| %>
+<div id="alert_msg"></div>
+        
+<%= form_with url:"/addbook",method: :post, local:false ,id:"bookform", model: @newbook do |formz| %>
 <div class="row">
 <%= formz.hidden_field :id %>
 <div class="col-md-12">
