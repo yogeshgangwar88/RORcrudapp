@@ -8,7 +8,7 @@ class IndexController < ApplicationController
       #@booksdata=Book.where(userid:session[:user_id]).to_json
   end
  
-########################################
+#########################################
 def newbook
     @newbook=Book.new
     if params[:id]!=nil
