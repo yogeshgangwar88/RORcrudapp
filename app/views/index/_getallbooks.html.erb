@@ -1,30 +1,65 @@
 
+<div style="height:10px;"></div>
+<div id="books_grid_header" style="height:30px;text-align:center"><u><strong>Favourite Books</strong></u><a class="btn btn-primary btn-sm float-end" href="/newbook">Add New Book</a></div>
+<div style="height:20px;"></div>
+<div id="books_grid" class = "ag-theme-alpine" style="width: 100%; height: 350px;"></div>
 
-<table class="table table-hover">
-  <thead class="thead-dark" style=    "background-color: lightcyan;">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Author</th>
-      <th scope="col">Price</th>
-      <th scope="col" colspan="2">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% item=0 %>
-    <% if @books.count>0 %>
-      <% for bk in @books do %>
-      <% item= item+1 %>
-      <tr> <td scope="row"><%= item %></td><td><%= bk.name %></td><td><%= bk.author %></td><td><%= bk.price %></td><td> <%= link_to "Edit", "/newbook/"+bk.id.to_s ,:class=>"btn btn-sm",style:"background-color: antiquewhite;" %> </td><td> <%= link_to "delete", deletex_path(bk), method: :delete, remote: true,data: {confirm: "Are you sure?"},class:"btn btn-danger btn-sm" %> </td></tr>  
-      <% end %>
-   <% else%>
-      <tr><td colspan="4">No Record available ...</td></tr>
-   <% end %>
+<script type="text/javascript">
+class MedalCellRenderer {
+
+  init(params) {
+  console.log(params);
+  this.eGui=document.createElement('div');
    
-  </tbody>
-  <tfoot>
-      <tr><td colspan="5"></td><td><%= link_to "Add New Book", newbook_path ,class:"btn btn-primary btn-sm" %></td></tr>
-  </tfoot>
- 
+  this.eGui.innerHTML = '<span><a class="btn btn-sm" style="background-color: antiquewhite;margin: 5px;" href="/newbook/'+params.data.id+'">Edit</a><a data-confirm="Are you sure?" class="btn btn-danger btn-sm" data-remote="true" rel="nofollow" data-method="delete" href="/deletebooks/'+params.data.id+'">delete</a></span>';
+  // this.eButton = this.eGui.querySelector('.confirmation'); 
+  // this.eventListener = () => confirm('are u sure');
+  // this.eButton.addEventListener("click", this.eventListener)
+  }
+
+  getGui() {
+    return this.eGui;
+  }
+
+  refresh(params) {
+    return false;
+  }
+}
+
+var coldefs=[
+  {"headerName":"#","valueGetter": "node.rowIndex + 1",width: 50,},
+  {"headerName":"Book Name","field":"name", "filter":"set"},
+  {"headerName":"Author","field":"author", "filter":"set"},
+  {"headerName":"Price","field":"price", "filter":"set"},
   
-</table>
+  {"headerName": "Action","field": "#",cellRenderer: MedalCellRenderer}
+]
+var gridOptions =
+{
+columnDefs: coldefs,
+rowData: <%= raw @booksdata %>,
+rowSelection: 'multiple',
+rowHeight: 40,
+headerHeight: 50,
+suppressRowClickSelection: true,
+enableColResize: true,
+enableStatusBar: true,
+enableRangeSelection: false,
+pagination : true,
+paginationPageSize:10
+};
+function manage_header_chekbox(){
+if(document.getElementById("aghcb").checked == true){
+      gridOptions.api.selectAll();
+      $('#aghcb').attr('checked', true);
+}
+else{
+      gridOptions.api.deselectAll();
+}
+}
+
+ document.addEventListener('DOMContentLoaded', function(){
+var gridDiv = document.querySelector('#books_grid');
+new agGrid.Grid(gridDiv, gridOptions);
+});
+</script>

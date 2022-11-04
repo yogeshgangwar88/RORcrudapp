@@ -1,2 +1,6 @@
 $('#alert_msg').html("<%= j render partial:'shared/flash'  %>")
- $("tr:has(a[href$='/deletebooks/<%= params[:id] %>'])").remove()
+//loadgrid();
+//$("tr:has(a[href$='/deletebooks/<%= params[:id] %>'])").remove()
+$('#gridxdiv').html("<%= j render partial:'getallbooks'  %>")
+var gridDiv = document.querySelector('#books_grid');
+new agGrid.Grid(gridDiv, gridOptions);

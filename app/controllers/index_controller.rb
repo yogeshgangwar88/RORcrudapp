@@ -5,7 +5,7 @@ class IndexController < ApplicationController
       @userx = session[:user_id]
       createlog(session[:user_id])
       @books=Book.where(userid:session[:user_id])
-      #@booksdata=Book.where(userid:session[:user_id]).to_json
+      @booksdata=Book.where(userid:session[:user_id]).to_json
   end
  
 ########################################
@@ -59,6 +59,7 @@ def deletebooks
         flash.now[:alert]= bk.name+" Deleted Successfully"
       end
     end
+    @booksdata=Book.where(userid:session[:user_id]).to_json
     respond_to do |format|
           format.js   
     end
