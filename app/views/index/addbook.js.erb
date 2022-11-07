@@ -1,16 +1,15 @@
 <% if flash[:success] %>
-        $('#alert_msg').html('<div class="alert alert-success" role="alert"> <%= flash[:success] %></div>')
-            <% if !flash[:success].include?('modified') %> //just for save and reset form
-            $('#bookform').trigger('reset')
-            <% end %>
+            //$('#alert_msg').html('<div class="alert alert-success" role="alert"> <%= flash[:success] %></div>')
+            swal.fire({text: "<%= flash[:success] %>!",type: "success",icon:"success",confirmButtonColor:"#0d6efd"}).then(function() { window.location = "/userprofile";});
 <% else %>
-
- $('#alert_msg').html(`<% if @newbook.errors.full_messages.any? %>
-            <div class="alert alert-danger" role="alert"> 
+            
+            $('#alert_msg').html(`<% if @newbook.errors.full_messages.any? %>
+            <div class="alert alert-danger" role="alert"><p>Following errors preventing to save this record</p><ul> 
             <% @newbook.errors.full_messages.each do |error_message| %>
-            <%= error_message %>  <br />
+            <li style="text-align: left;"> <%= error_message %>  <br /></li>
             <% end %>
-            </div>
-        <% end %>`)
+            </ul></div>
+            <% end %>`)
+            
 <% end %>
  

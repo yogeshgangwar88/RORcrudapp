@@ -3,7 +3,9 @@
 <div id="books_grid_header" style="height:30px;text-align:center"><u><strong>Favourite Books</strong></u><a class="btn btn-primary btn-sm float-end" href="/newbook">Add New Book</a></div>
 <div style="height:20px;"></div>
 <div id="books_grid" class = "ag-theme-alpine" style="width: 100%; height: 350px;"></div>
+<div id="deletetemplate">
 
+ </div>
 <script type="text/javascript">
 class MedalCellRenderer {
 
@@ -11,7 +13,7 @@ class MedalCellRenderer {
   console.log(params);
   this.eGui=document.createElement('div');
    
-  this.eGui.innerHTML = '<span><a class="btn btn-sm" style="background-color: antiquewhite;margin: 5px;" href="/newbook/'+params.data.id+'">Edit</a><a data-confirm="Are you sure?" class="btn btn-danger btn-sm" data-remote="true" rel="nofollow" data-method="delete" href="/deletebooks/'+params.data.id+'">delete</a></span>';
+  this.eGui.innerHTML = '<span><a class="btn btn-sm" style="background-color: antiquewhite;margin: 5px;" href="/newbook/'+params.data.id+'">Edit</a> <input class="btn btn-danger btn-sm" type="button" onclick="deletepop('+params.data.id+',\''+params.data.name+'\')" value="Delete" /> </span>';
   // this.eButton = this.eGui.querySelector('.confirmation'); 
   // this.eventListener = () => confirm('are u sure');
   // this.eButton.addEventListener("click", this.eventListener)
@@ -25,7 +27,11 @@ class MedalCellRenderer {
     return false;
   }
 }
-
+function deletepop(idx,nm) {
+var deltemp='<template id="my-template"><swal-title>Are you sure ?</swal-title><swal-icon type="warning" color="red"></swal-icon><swal-html><p style="color: red;">'+nm+' record will get delete permanently </p> </br> <a  class="btn btn-danger btn-sm" data-remote="true" rel="nofollow" data-method="delete" href="/deletebooks/'+idx+'">Delete</a> <button type="button" class="btn btn-sm" onclick="swal.close();" style="background-color: darkgray;">Cancel</button></swal-html></template>';
+  $('#deletetemplate').html(deltemp);
+  swal.fire({ template: '#my-template',showConfirmButton:false,showCancelButton:false})
+}
 var coldefs=[
   {"headerName":"#","valueGetter": "node.rowIndex + 1",width: 50,},
   {"headerName":"Book Name","field":"name", "filter":"set"},

@@ -1,6 +1,7 @@
-$('#alert_msg').html("<%= j render partial:'shared/flash'  %>")
-//loadgrid();
+//$('#alert_msg').html("<%= j render partial:'shared/flash'  %>")
 //$("tr:has(a[href$='/deletebooks/<%= params[:id] %>'])").remove()
+swal.fire({text: "Record deleted successfully",title:"Delete",type: "success",icon:"success",confirmButtonColor:"#0d6efd"});
+
 $('#gridxdiv').html("<%= j render partial:'getallbooks'  %>")
 var gridDiv = document.querySelector('#books_grid');
 new agGrid.Grid(gridDiv, gridOptions);

@@ -1,9 +1,9 @@
-<%= render "userheader" %>
+
 <div class="page-header">
     <h1>Books </h1>       
 </div>
 
-<div id="alert_msg"></div>
+<div id="alert_msg" style="width:50%;"></div>
         
 <%= form_with url:"/addbook",method: :post, local:false ,id:"bookform", model: @newbook do |formz| %>
 <div class="row">
@@ -43,7 +43,7 @@
 <%  if @newbook.id==nil%>
 <%= formz.submit "Add Record" ,class:"btn btn-primary btn-sm",style:"margin-top: 10px"  %>
 <% else %>
-<%= formz.submit "Edit Record" ,class:"btn btn-primary btn-sm",style:"margin-top: 10px"  %>
+<%= formz.submit "Update" ,class:"btn btn-primary btn-sm",style:"margin-top: 10px"  %>
 <% end %>
 </div> 
 </div> 

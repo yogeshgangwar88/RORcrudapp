@@ -13,7 +13,7 @@
                   <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
   <%= render partial:"shared/flash"  %>
 <% if @usr.errors.full_messages.any? %>
-<div class="alert alert-warning" role="alert"> 
+<div class="alert alert-danger" role="alert"> 
   <% @usr.errors.full_messages.each do |error_message| %>
     <%= error_message %>  <br />
   <% end %>
