@@ -67,25 +67,33 @@ FB.login(function(response) {
     console.log('fb login');
     console.log(response);
     if(response.status=="connected"){
-    const  mydata={userid:response.authResponse.userID, accessToken:response.authResponse.accessToken, signedRequest:response.authResponse.signedRequest};
+      FB.api('/me', {fields: 'id,name,email'}, function(detailresp) {
+      console.log(detailresp);
+		  swal.fire({text: "Logged in as "+detailresp.name,title:"Success",type: "success",icon:"success",confirmButtonColor:"#0d6efd"}).then(function() {
+      const  mydata={userid:response.authResponse.userID, accessToken:response.authResponse.accessToken, signedRequest:response.authResponse.signedRequest};
       $.ajax({
         type: "POST",
         url: "/fbuserlogin",
         data: mydata,
         success: function(data, textStatus, jqXHR){
-          window.location.href='/userprofile'
+                  window.location.href='/userprofile'
         },
         error: function(jqXHR, textStatus, errorThrown){
-      swal.fire({text: "something went wrong,please try again...",title:"Login failed",type: "error",icon:"error",confirmButtonColor:"#0d6efd"})
+        swal.fire({text: "something went wrong please try again...",title:"Login failed",type: "error",icon:"error",confirmButtonColor:"#0d6efd"})
         }
-      })
+      });
+      }
+      );
+
+      });
+
     }
     else{
     swal.fire({text: "something went wrong,please try again...",title:"Login failed",type: "error",icon:"error",confirmButtonColor:"#0d6efd"})
 
     }
 
-});
+})
 
 
 }
