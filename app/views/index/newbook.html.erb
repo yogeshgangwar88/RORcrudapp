@@ -18,13 +18,13 @@
 </div>
 <div class="col-md-12">
 <div class="col-md-6">
-<%= formz.label :category,"Category" , class:"form-label" %>
+<%= formz.label :category_id,"Category" , class:"form-label" %>
 </div>
 <div class="col-md-6">
-<% options=[["Select Category",""]]
+<% options=[["Select Category","0"]]
 Category.all.map{|c| options.push([c.name, c.id]) }
 %>
-<%= formz.select :category,options ,{}, { :class => 'form-control' }  %>
+<%= formz.select :category_id,options ,{}, { :class => 'form-control' }  %>
 </div>
 </div>
 <div class="col-md-12">
