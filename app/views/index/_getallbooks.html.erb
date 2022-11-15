@@ -12,9 +12,9 @@ class MedalCellRenderer {
   init(params) {
   console.log(params);
   this.eGui=document.createElement('div');
-   
+
   this.eGui.innerHTML = '<span><a class="btn btn-sm" style="background-color: antiquewhite;margin: 5px;" href="/newbook/'+params.data.id+'">Edit</a> <input class="btn btn-danger btn-sm" type="button" onclick="deletepop('+params.data.id+',\''+params.data.name+'\')" value="Delete" /> </span>';
-  // this.eButton = this.eGui.querySelector('.confirmation'); 
+  // this.eButton = this.eGui.querySelector('.confirmation');
   // this.eventListener = () => confirm('are u sure');
   // this.eButton.addEventListener("click", this.eventListener)
   }
@@ -35,9 +35,10 @@ var deltemp='<template id="my-template"><swal-title>Are you sure ?</swal-title><
 var coldefs=[
   {"headerName":"#","valueGetter": "node.rowIndex + 1",width: 50,},
   {"headerName":"Book Name","field":"name", "filter":"set"},
+  {"headerName":"Category","field":"categoryname", "filter":"set"},
   {"headerName":"Author","field":"author", "filter":"set"},
   {"headerName":"Price","field":"price", "filter":"set"},
-  
+
   {"headerName": "Action","field": "#",cellRenderer: MedalCellRenderer}
 ]
 var gridOptions =

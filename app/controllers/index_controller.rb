@@ -5,7 +5,7 @@ class IndexController < ApplicationController
     @userx = session[:user_id]
     createlog(session[:user_id])
     @books = Book.where(userid: session[:user_id])
-    @booksdata = Book.where(userid: session[:user_id]).to_json
+    @booksdata = Book.select("books.*,categories.name as categoryname").joins(:category).where(userid: session[:user_id]).to_json
   end
 
   ########################################
