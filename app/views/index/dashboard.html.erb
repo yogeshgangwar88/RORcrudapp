@@ -1,0 +1,21 @@
+<div class="card" style="margin-top: 35px;">
+  <h5 class="card-header">Books creation datewise </h5>
+  <div class="card-body">
+
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <%= timeline [
+  ["Sun", "1789-04-29", "1797-03-03"],
+  ["Mon", "1797-03-03", "1801-03-03"],
+  ["Tue", "1801-03-03", "1809-03-03"]
+] %>
+  </div>
+</div>
+
+
+<%= pie_chart  @chartdata,id:"bookschart",colors: ["#b00", "#666","#46cf3d"] %>
+
+
+
+<script>
+console.log(<%= raw @chartdata %>)
+</script>

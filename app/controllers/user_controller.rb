@@ -3,7 +3,7 @@ class UserController < ApplicationController
     logger.info "******************* this is signin method ****************"
     if session[:user_id] != nil
       flash[:success] = "Already logged in"
-      redirect_to "/userprofile"
+      redirect_to "/dashboard"
     end
   end
 
@@ -13,7 +13,7 @@ class UserController < ApplicationController
     validuser = User.find_by(email: emailadd)&.authenticate(passwd)
     if validuser != nil && validuser
       session[:user_id] = validuser.id
-      redirect_to "/userprofile"
+      redirect_to "/dashboard"
     else
       flash.now[:alert] = "Email or password did not match."
       render :signin

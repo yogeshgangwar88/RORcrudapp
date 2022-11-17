@@ -1,10 +1,19 @@
 class IndexController < ApplicationController
   #skip_before_action :signin_path
+  def dashboard
+    bkdata = Book.select("books.*,categories.name as catname").joins(:category).where(userid: session[:user_id])
+    bkdata = bkdata.map { |b| b.catname }
+    quniq = bkdata.uniq
+    @chartdata = []
+    quniq.each do |x|
+      len = bkdata.count(x)
+      @chartdata.push([x, len])
+    end
+  end
 
   def userprofile
     @userx = session[:user_id]
     createlog(session[:user_id])
-    @books = Book.where(userid: session[:user_id])
     @booksdata = Book.select("books.*,categories.name as categoryname").joins(:category).where(userid: session[:user_id]).to_json
   end
 

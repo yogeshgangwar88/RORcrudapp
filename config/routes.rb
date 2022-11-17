@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get "/register", to: "user#register", as: "register"
   post "/registeruser", to: "user#registeruser", as: "registeruser"
   get "/logout", to: "user#logout", as: "userlogout"
-
+  get "/dashboard", to: "index#dashboard", as: "dashboard"
   get "/userprofile", to: "index#userprofile", as: "userprofile"
   delete "/deletebooks/:id", to: "index#deletebooks", as: "deletex"
   get "/newbook(/:id)", to: "index#newbook", as: "newbook"
